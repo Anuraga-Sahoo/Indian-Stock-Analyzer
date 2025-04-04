@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analyzer Pro - India</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>FinE - Stock Analyzer Pro</span>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="input-section">
+            <div class="input-group">
+                <div class="group">
+                    <label for="stockSymbol">
+                        <i class="fa-solid fa-magnifying-glass" id="btn"></i> Search Stock Name
+                    </label>
+                    <input type="text" id="stockSymbol" placeholder="Enter stock symbol (e.g., RELIANCE)">
+                </div>
+
+                <div class="group">
+
+                    <label for="exchange">
+                        <i class="fas fa-chart-pie"></i> Select Exchange
+                    </label>
+                <select id="exchange">
+                    <option value="NS">NSE</option>
+                    <option value="BO">BSE</option>
+                </select>
+            </div>
+                <div class="group">
+                <label for="startDate">
+                    <i class="far fa-calendar-alt"></i> Investment Date
+                </label>
+                <input type="date" id="startDate">
+            </div>
+            <div class="group flex-end">
+                <button id="analyzeBtn" onclick="analyzeStock()">Analyze Stock</button>
+            </div>
+            </div>
+        </div>
+
+        <div id="loadingIndicator" class="loading-indicator hidden">
+            <div class="Loadercontainer">
+                <div class="loader"></div>
+            </div>
+            Analyzing stock data...
+        </div>
+
+        <div id="errorMessage" class="error-message hidden"></div>
+
+        <div id="results" class="results-container hidden">
+            <div class="price-recommendation">
+                <div class="current-price">
+                    <h2>Current Price</h2>
+                    <p id="currentPrice">₹0.00</p>
+                </div>
+                <div class="recommendation">
+                    <h2>Recommendation</h2>
+                    <p id="recommendationBadge"></p>
+                </div>
+            </div>
+            <div class="analysis-grid">
+                <div class="signals-card">
+                    <h2>Trading Signals</h2>
+                    <ul id="signalsList"></ul>
+                </div>
+
+                <div class="metrics-card">
+                    <h2>Risk Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <label>Sharpe Ratio</label>
+                            <span id="sharpeRatio">-</span>
+                        </div>
+                        <div class="metric">
+                            <label>Volatility</label>
+                            <span id="volatility">-</span>
+                        </div>
+                        <div class="metric">
+                            <label>Max Drawdown</label>
+                            <span id="maxDrawdown">-</span>
+                        </div>
+                        <div class="metric">
+                            <label>Beta</label>
+                            <span id="beta">-</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="otherStockRecomendation" id="topRecomendation">
+                <h2 class="recomendationHeading">Recomended Stock by us For Buy</h2>
+                <div id="otherStockRecomendationList">
+                    
+                </div>
+            </div>
+
+            <div id="fundamentalAnalysisSection" class="fundamental-analysis hidden">
+                <div class="section-divider">
+                    <h2>Fundamental Analysis</h2>
+                </div>
+
+                <div class="fundamental-grid">
+                    <div class="basic-info-card">
+                        <h3>Company Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Company Name</label>
+                                <span id="companyName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Sector</label>
+                                <span id="sector">-</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Industry</label>
+                                <span id="industry">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="valuation-metrics-card">
+                        <h3>Valuation Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <label>Market Cap</label>
+                                <span id="marketCap">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>P/E Ratio</label>
+                                <span id="peRatio">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Forward P/E</label>
+                                <span id="forwardPE">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Price to Book</label>
+                                <span id="priceToBook">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Dividend Yield</label>
+                                <span id="dividendYield">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="financial-health-card">
+                        <h3>Financial Health</h3>
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <label>Total Revenue</label>
+                                <span id="totalRevenue">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Gross Profit</label>
+                                <span id="grossProfit">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Net Income</label>
+                                <span id="netIncome">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Total Debt</label>
+                                <span id="totalDebt">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Debt to Equity</label>
+                                <span id="debtToEquity">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Return on Equity</label>
+                                <span id="returnOnEquity">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="growth-metrics-card">
+                        <h3>Growth Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric">
+                                <label>Revenue Growth</label>
+                                <span id="revenueGrowth">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Earnings Growth</label>
+                                <span id="earningsGrowth">-</span>
+                            </div>
+                            <div class="metric">
+                                <label>Profit Margins</label>
+                                <span id="profitMargins">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fundamental-recommendation-card">
+                        <h3>Fundamental Recommendation</h3>
+                        <div class="recommendation-container">
+                            <p id="fundamentalRecommendationBadge" class="recommendation-badge"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="charts" id="charts">
+            <div id="priceChart" class="chart-container"></div>
+            <div id="indicatorsChart" class="chart-container"></div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer-popup hidden" id="disclaimerPopup">
+            <div class="popup-content">
+                <button class="close-btn" id="closeDisclaimer">&times;</button>
+                <p class="disclaimer-text">Disclaimer : This tool is for educational purposes only. It does not constitute financial advice. Please consult with a financial advisor before making any investment decisions.</p>
+            </div>
+        </div>
+        
+        <div class="disclaimer-toggle" id="disclaimerToggle">
+            <span>⚠️ Disclaimer</span>
+        </div>
+    </div>
+
+    
+   
+    <footer class="footer" align="center">
+        <p>© 2025 FinE - Financial Empowerment for Everyone. All rights reserved.</p>
+    </footer>
+  
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

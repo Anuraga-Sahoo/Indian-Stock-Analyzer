@@ -1,0 +1,446 @@
+/* style.css */
+/* Base Variables & Reset */
+:root {
+    --primary: #6c5ce7;
+    --primary-dark: #4b3d8f;
+    --secondary: #a8a5e6;
+    --background: #1a1a2e;
+    --card-bg: #16213e;
+    --text: #e6e6e6;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+    --border-radius: 10px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.flex-end{
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--card-bg);
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.logo i {
+    font-size: 2rem;
+}
+
+/* Main Container */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Input Section */
+.input-section {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+input, select, button {
+    padding: 0.8rem 1rem;
+    border: 1px solid #30475e;
+    border-radius: 8px;
+    background-color: var(--background);
+    color: var(--text);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+}
+
+button {
+    background-color: var(--primary);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Results Section */
+.results-container {
+    display: grid;
+    gap: 2rem;
+}
+
+.price-recommendation {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+}
+
+.current-price, .recommendation {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--background);
+    border-radius: var(--border-radius);
+}
+
+.current-price p {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+/* Analysis Grid */
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.signals-card, .metrics-card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.metric {
+    background-color: var(--background);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.metric label {
+    display: block;
+    color: var(--secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.metric span {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Fundamental Analysis */
+.fundamental-analysis {
+    display: grid;
+    gap: 2rem;
+}
+
+.fundamental-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.basic-info-card,
+.valuation-metrics-card,
+.financial-health-card,
+.growth-metrics-card,
+.fundamental-recommendation-card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+}
+
+.info-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: var(--background);
+    border-radius: 8px;
+}
+
+/* Charts */
+.charts {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-container {
+    /* background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    /* height: 500px; */
+    /* min-height: 400px;  */
+    /* padding: 1.5rem;
+    flex: 1 1 45%; 
+    min-width: 300px; 
+    height: 500px;
+    position: relative;
+    overflow: hidden;  */
+}
+
+/* Recommendations */
+.otherStockRecomendation {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+}
+
+#otherStockRecomendationList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.list-group-item-div {
+    background-color: var(--background);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.list-group-item-div:hover {
+    transform: translateY(-5px);
+}
+
+/* Recommendations Badges */
+.recommendation-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.strong-buy { background-color: var(--success); }
+.buy { background-color: #27ae60; }
+.hold { background-color: var(--warning); color: #000; }
+.sell { background-color: var(--danger); }
+.strong-sell { background-color: #c0392b; }
+
+/* Loading & Error States */
+.loading-indicator {
+    text-align: center;
+    padding: 2rem;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error-message {
+    background-color: #e74c3c33;
+    color: var(--danger);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Disclaimer */
+.disclaimer-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    max-width: 600px;
+    position: relative;
+    margin: 1rem;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.disclaimer-toggle {
+    position: fixed;
+    right: -90px;
+    bottom: 50%;
+    transform: translateY(50%);
+    background: var(--primary);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 25px 0 0 25px;
+    cursor: pointer;
+    transition: right 0.3s ease;
+}
+
+.disclaimer-toggle:hover {
+    right: 0;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: auto;
+}
+.hidden {
+    display: none;
+}
+.recommendation-container{
+    display:flex ;
+    justify-content: center;
+    margin-top: 1rem;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    /* .main-svg{
+    width: 100%;
+} */
+.chart-container{
+    overflow: scroll;
+ }
+
+    .input-group {
+        grid-template-columns: 1fr;
+    }
+
+    .charts {
+        grid-template-columns: 1fr;
+        display:none;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .chart-container {
+        /* height: 400px; */
+        padding: 20px;
+    border-radius: 8px;
+    min-height: 400px;
+    }
+
+    .current-price p {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.2rem;
+    }
+    /* body{
+        background-color: red;
+    } */
+    /* .main-svg{
+        width: 90%;
+        height: 15rem;
+    } */
+     .chart-container{
+        overflow: scroll;
+     }
+    .fundamental-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* .main-svg{
+    max-width: 98%;
+} */
+
+/* .chart-container .main-svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    display: block;
+} */
