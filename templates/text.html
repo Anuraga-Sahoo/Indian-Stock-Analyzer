@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamental Insights</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Fundamental<br>insights</h1>
+        
+        <div class="card expanded" id="fundamentals-card">
+            <div class="card-header" onclick="toggleCard('fundamentals-card')">
+                <div class="card-title">
+                    <span class="lightning-icon">⚡</span>
+                    Fundamentals
+                </div>
+                <span class="chevron-icon chevron-up">▲</span>
+            </div>
+            <div class="card-content">
+                <div class="tags">
+                    <div class="tag">Large-Cap</div>
+                    <div class="tag">Telecommunication - Service Provider</div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">P/E Ratio</div>
+                        <div class="metric-value">60.32</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Sector P/E</div>
+                        <div class="metric-value">53.54</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Dividend yield</div>
+                        <div class="metric-value">0.4 %</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Market cap</div>
+                        <div class="metric-value">₹ 4,43,237 Cr</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" id="shareholding-card">
+            <div class="card-header" onclick="toggleCard('shareholding-card')">
+                <div class="card-title">
+                    <span class="lightning-icon">⚡</span>
+                    Shareholding
+                </div>
+                <span class="chevron-icon">▲</span>
+            </div>
+            <div class="card-content">
+                <!-- Shareholding content would go here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleCard(cardId) {
+            const card = document.getElementById(cardId);
+            card.classList.toggle('expanded');
+            
+            const chevron = card.querySelector('.chevron-icon');
+            chevron.classList.toggle('chevron-up');
+        }
+
+        // Ensure the fundamentals card is expanded on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const fundamentalsCard = document.getElementById('fundamentals-card');
+            fundamentalsCard.classList.add('expanded');
+            const chevron = fundamentalsCard.querySelector('.chevron-icon');
+            chevron.classList.add('chevron-up');
+        });
+        
+    </script>
+</body>
+</html>

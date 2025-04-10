@@ -72,6 +72,7 @@ class IndianStockAnalyzer:
             
             data = stock.history(start=start_date, interval=interval)
             
+            
             if data.empty:
                 raise ValueError(f"No data found for symbol {stock_symbol}")
                 
@@ -117,6 +118,10 @@ class IndianStockAnalyzer:
             # Use yfinance for basic fundamental data
             stock = yf.Ticker(full_symbol)
             info = stock.info
+            website = info.get('website', '')
+            
+            domain = website.split('//')[-1].split('/')[0]
+            logoURL = f"https://logo.clearbit.com/{domain}"
             
             # Fetch additional fundamental details
             fundamental_data = {
@@ -124,6 +129,8 @@ class IndianStockAnalyzer:
                     'company_name': info.get('longName', 'N/A'),
                     'sector': info.get('sector', 'N/A'),
                     'industry': info.get('industry', 'N/A'),
+                    'company_logo':info.get('logo_url', 'N/A'),
+                    'logoURL' : logoURL
                 },
                 'valuation_metrics': {
                     'market_cap': info.get('marketCap', 0),

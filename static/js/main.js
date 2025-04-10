@@ -44,6 +44,68 @@ function formatPercentage(value) {
     return `${parseFloat(value).toFixed(2)}%`;
 }
 
+
+// //////////////////////////////////////////////////////////////
+// current date and time format
+// Update immediately 
+function getFormattedDateTime() {
+    const date = new Date();
+    
+    // Get date components
+    const day = String(date.getDate()).padStart(2, '0');
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[date.getMonth()];
+    const year = String(date.getFullYear()).slice(-2);
+    
+    // Get time components
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    // Convert to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    hours = String(hours).padStart(2, '0');
+
+    return `${day} ${month} ${year}, ${hours}:${minutes} ${ampm}`;
+}
+
+// ////////////////////////////////////////////////////////////////////
+// update recomendation colour
+function updateRecomendationColor(recomendation){
+    const recDiv = document.getElementById('recDiv')
+    if(recomendation === "Strong Buy" || recomendation === "Buy"){
+        recDiv.style.background="#30a166"
+    }
+    else if(recomendation === "Hold" ){
+        recDiv.style.background="orange"
+    }
+    else{
+        recDiv.style.background="#f43f5e"
+    }
+}
+
+
+
+// ////////////////////////////////////////////////////////////////////////
+function toggleCard(cardId) {
+    const card = document.getElementById(cardId);
+    card.classList.toggle('expanded');
+    
+    const chevron = card.querySelector('.chevron-icon');
+    chevron.classList.toggle('chevron-up');
+}
+
+// Ensure the fundamentals card is expanded on load
+document.addEventListener('DOMContentLoaded', function() {
+    const fundamentalsCard = document.getElementById('fundamentals-card');
+    fundamentalsCard.classList.add('expanded');
+    const chevron = fundamentalsCard.querySelector('.chevron-icon');
+    chevron.classList.add('chevron-up');
+});
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function Name - updateFundamentalAnalysisSection
 // Author - Ojas Ulhas Dighe
@@ -188,7 +250,11 @@ function createPriceChart(chartData) {
     ];
 
     const layout = {
-
+        paper_bgcolor: '#121218',   // Background of the entire chart
+        plot_bgcolor: '#121218', 
+        font: {
+            color: 'white'  // Adjust text color for readability
+          },
         title: 'Price Action',
         autosize: true,
         xaxis: { title: 'Date' },
@@ -243,6 +309,11 @@ function createIndicatorsChart(chartData) {
     const layout = {
         title: 'Technical Indicators',
         autosize: true,
+        paper_bgcolor: '#121218',   // Background of the entire chart
+        plot_bgcolor: '#121218', 
+        font: {
+            color: 'white'  // Adjust text color for readability
+          },
         xaxis: { title: 'Date' },
         yaxis: { 
             title: 'RSI',
@@ -271,6 +342,7 @@ async function analyzeStock() {
     const stockSymbol = document.getElementById('stockSymbol').value;
     const exchange = document.getElementById('exchange').value;
     const startDate = document.getElementById('startDate').value;
+
 
     if (!stockSymbol) {
         showError('Please enter a stock symbol');
@@ -307,6 +379,7 @@ async function analyzeStock() {
         }
 
         updateUI(result.data);
+        document.getElementById('tickerName').innerText = stockSymbol.toUpperCase()
     } catch (error) {
         showError(error.message || 'An error occurred while analyzing the stock');
     } finally {
@@ -325,20 +398,27 @@ function updateUI(data) {
     document.getElementById('results').classList.remove('hidden');
     // show charts
     document.getElementById('charts').style.display = 'grid'
+//  UPDATE TIME
+    document.querySelector('.date').textContent = getFormattedDateTime();
+    // Update the color of the recomendation div
+    updateRecomendationColor(data.recommendation)
+    // update logo of stocks
+    document.getElementById('img').setAttribute('src', data.fundamentalAnalysis.basic_info.logoURL)
 
     // Update current price and recommendation
     document.getElementById('currentPrice').textContent = formatCurrency(data.currentPrice);
     const recommendationBadge = document.getElementById('recommendationBadge');
     recommendationBadge.textContent = data.recommendation;
-    recommendationBadge.className = `recommendation-badge ${getRecommendationClass(data.recommendation)}`;
+    // recommendationBadge.className = `recommendation-badge ${getRecommendationClass(data.recommendation)}`;
 
     // Update signals list
     const signalsList = document.getElementById('signalsList');
     signalsList.innerHTML = '';
     data.signals.forEach(signal => {
-        const li = document.createElement('p');
+        const li = document.createElement('li');
         li.textContent = signal;
         signalsList.appendChild(li);
+        li.setAttribute('class', "analysis-text")
     });
 
     // Update risk metrics

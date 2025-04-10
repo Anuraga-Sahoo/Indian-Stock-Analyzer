@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Analyzer Pro - India</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylelimo.css') }}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
@@ -59,17 +59,278 @@
         <div id="errorMessage" class="error-message hidden"></div>
 
         <div id="results" class="results-container hidden">
-            <div class="price-recommendation">
-                <div class="current-price">
-                    <h2>Current Price</h2>
-                    <p id="currentPrice">₹0.00</p>
+
+<!-- ===================== -->
+  <!-- Content -->
+  <div class="container">
+    <!-- Logo and Date -->
+    <div class="logo-date">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 9L12 4L21 9L12 14L3 9Z" fill="#333" />
+                    <path d="M3 14L12 19L21 14" stroke="#333" stroke-width="2" />
+                </svg>
+            </div>
+            <span class="logo-text">Stock Details</span>
+        </div>
+        <span class="date">-</span>
+    </div>
+
+    <!-- Stock Info -->
+    <div class="stock-info">
+        <div class="stock-details">
+            <div class="stock-icon">
+                <div class="stock-icon-inner">
+                    <img id="img" class="logo-icon" src="" alt="img">
                 </div>
+            </div>
+            <div>
+                <h2 class="stock-name" id="tickerName">-</h2>
+                <p class="stock-company" id="companyName">-</p>
+                <p id="currentPrice" class="stock-price">-</p>
+            </div>
+        </div>
+        <div class="recomendation-stock-div">
+            <p class="verdict-label">Recomendation</p>
+            <div class="verdict" id="recDiv">
+                <p id="recommendationBadge" class="verdict-value"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time Period -->
+    <div class="time-period">
+        <div class="period-badge">
+            <div class="info-icon">i</div>
+            <span>0-3 months</span>
+        </div>
+    </div>
+
+    <!-- Support/Resistance -->
+    <div class="technical-Analysis">
+        <div class="sr-grid">
+            <div class="sr-item">
+                <p class="sr-label">Sharpe Ratio</p>
+                <p class="sr-value" id="sharpeRatio"> </p>
+            </div>
+            <div class="sr-item">
+                <p class="sr-label">Volatility</p>
+                <p class="sr-value" id="volatility"></p>
+            </div>
+            <div class="sr-item">
+                <p class="sr-label">Max Drawdown</p>
+                <p class="sr-value" id="maxDrawdown"></p>
+            </div>
+            <div class="sr-item">
+                <p class="sr-label">Beta</p>
+                <p class="sr-value" id="beta"></p>
+            </div>
+        </div>
+        <!-- <div class="chevron-down">▼</div> -->
+    </div>
+    <!-- Trading signals -->
+    <div class="analysis">
+        <!-- <div class="analysis-point">
+            <div class="bullet"></div>
+            <p class="analysis-text">
+                It is advisable to exit and book profits as the company's fundamentals and technicals both are weak.
+            </p>
+        </div> -->
+        <div class="signals-card analysis-point">
+            <h2 class="gradiant-text">Trading Signals</h2>
+            
+            <ul id="signalsList" class="bullet-points-container"></ul>
+        </div>
+        
+    </div>
+    </div>
+    <hr>
+    <div class="container">
+        <h1 class="title">Fundamental<br>insights</h1>
+        <!-- market cap -->
+    <div class="trading-details">
+        <div class="td-grid">
+            <div class="td-item">
+                <p class="td-label">marketCap</p>
+                <p class="td-value green-text" id="marketCap">-</p>
+            </div>
+            <div class="td-item">
+                <p class="td-label" >Industry</p>
+                <p class="td-value" id="industry">-</p>
+            </div>
+            <div class="td-item">
+                <p class="td-label">Sector</p>
+                <p class="td-value" id="sector">-</p>
+            </div>
+        </div>
+        <!-- <p class="td-date date">as of 01 Mar '23, 09:21 AM</p> -->
+    </div>
+        
+        <div class="card expanded" id="fundamentals-card">
+            <div class="card-header" onclick="toggleCard('fundamentals-card')">
+                <div class="card-title">
+                    <span class="lightning-icon">⚡</span>
+                    Fundamentals
+                </div>
+                <span class="chevron-icon chevron-up">▲</span>
+            </div>
+            <div class="card-content">
+                <div class="tag-container">
+                <div class="tags">
+                    <div class="tag">Large-Cap</div>
+                </div>
+                    <!-- <div id="sector" class="tag" ></div> -->
+                </div>
+            </div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">P/E Ratio</div>
+                        <div class="metric-value" id="peRatio">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Forward P/E</div>
+                        <div class="metric-value" id="forwardPE">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Dividend yield</div>
+                        <div class="metric-value" id="dividendYield">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Price to Book</div>
+                        <div class="metric-value" id="priceToBook">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="financial-card">
+                <div class="card-header" onclick="toggleCard('financial-card')">
+                    <div class="card-title">
+                        <span class="lightning-icon"> ⚡</span>
+                        Financial Health
+                    </div>
+                    <span class="chevron-icon">▲</span>
+                </div>
+                <div class="card-content">
+                    <!-- ============== -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Total Revenue</div>
+                            <div class="metric-value" id="totalRevenue">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Gross Profit</div>
+                            <div class="metric-value" id="grossProfit">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Net Income</div>
+                            <div class="metric-value" id="netIncome">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Total Debt</div>
+                            <div class="metric-value" id="totalDebt">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Debt to Equity</div>
+                            <div class="metric-value" id="debtToEquity">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Return on Equity</div>
+                            <div class="metric-value" id="returnOnEquity">-</div>
+                        </div>
+                    </div>
+                    <!-- ============= -->
+                </div>
+            </div>
+
+
+            <div class="card" id="growth-card">
+                <div class="card-header" onclick="toggleCard('growth-card')">
+                    <div class="card-title">
+                        <span class="lightning-icon">📈</span>
+                        Growth Metrics
+                    </div>
+                    <span class="chevron-icon">▲</span>
+                </div>
+                <div class="card-content">
+                    <!-- ============== -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Revenue Growth</div>
+                            <div class="metric-value" id="revenueGrowth">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Earnings Growth</div>
+                            <div class="metric-value" id="earningsGrowth">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Profit Margins</div>
+                            <div class="metric-value" id="profitMargins">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Fundamental Recommendation</div>
+                            <div class="metric-value" id="fundamentalRecommendationBadge">-</div>
+                        </div>
+                        
+                    </div>
+                    <!-- ============= -->
+                </div>
+            </div>
+
+            <!-- chart -->
+            <div class="charts" id="charts">
+                <div id="priceChart" class="chart-container"></div>
+                <div id="indicatorsChart" class="chart-container"></div>
+            </div>
+
+
+                <!-- /- -->
+
+                <!-- Stock recomendation -->
+                <div class="otherStockRecomendation" id="topRecomendation">
+                    <h2 class="recomendationHeading">Recomended Stock by us For Buy</h2>
+                    <div id="otherStockRecomendationList">
+                        
+                    </div>
+                </div>
+                <!--  / -->
+
+                <!-- future price prediction Analysis -->
+                <div class="chart-section">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-area"></i> Price Prediction Analysis</h3>
+                            <div class="chart-actions">
+                                <button class="icon-button" onclick="toggleFullscreen()">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- / -->
+        </div>
+        
+        
+    </div>
+
+    
+
+   
+
+
+            <!-- ========================= -->
+            <!-- <div class="price-recommendation">
+                
                 <div class="recommendation">
                     <h2>Recommendation</h2>
                     <p id="recommendationBadge"></p>
                 </div>
-            </div>
-            <div class="analysis-grid">
+            </div> -->
+            <!-- <div class="analysis-grid">
                 <div class="signals-card">
                     <h2>Trading Signals</h2>
                     <ul id="signalsList"></ul>
@@ -97,21 +358,16 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
-            <div class="otherStockRecomendation" id="topRecomendation">
-                <h2 class="recomendationHeading">Recomended Stock by us For Buy</h2>
-                <div id="otherStockRecomendationList">
-                    
-                </div>
-            </div>
+           
 
             <div id="fundamentalAnalysisSection" class="fundamental-analysis hidden">
-                <div class="section-divider">
+                <!-- <div class="section-divider">
                     <h2>Fundamental Analysis</h2>
-                </div>
+                </div> -->
 
-                <div class="fundamental-grid">
+                <!-- <div class="fundamental-grid">
                     <div class="basic-info-card">
                         <h3>Company Information</h3>
                         <div class="info-grid">
@@ -210,15 +466,15 @@
                             <p id="fundamentalRecommendationBadge" class="recommendation-badge"></p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
         </div>
 
-        <div class="charts" id="charts">
+        <!-- <div class="charts" id="charts">
             <div id="priceChart" class="chart-container"></div>
             <div id="indicatorsChart" class="chart-container"></div>
-        </div>
+        </div> -->
 
         <!-- Disclaimer -->
         <div class="disclaimer-popup hidden" id="disclaimerPopup">
